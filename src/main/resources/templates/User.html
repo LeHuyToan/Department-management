@@ -1,0 +1,58 @@
+<html layout:decorate="/template.html">
+
+<head>
+	<title>Users</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h1>List User</h1>
+		<a th:href="@{/user/new}">New</a>
+		<form th:action="@{/user/search}" method="get" th:object="${searchDTO}">
+			<input th:field="*{keyword}" placeholder="Tìm tên...">
+			<p th:errors="*{keyword}"></p>
+
+			<input th:field="*{currentPage}" placeholder="Trang hiện tại...">
+			<input th:field="*{size}" placeholder="Số lượng bản ghi/trang...">
+			<input name="sortedField" placeholder="Sắp xếp theo cột" th:value="${searchDTO?.sortedField}">
+			<button type="submit">Search</button>
+		</form>
+		<p th:text="${totalPage}"></p>
+		<p th:text="${totalElements}"></p>
+		<table border="1">
+			<!--Dong tieu de bang-->
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Username</th>
+				<th>Avatar</th>
+				<th>HomeAddress</th>
+				<th>Department</th>
+				<th>Actions</th>
+			</tr>
+			<!--Noi dung trong bang Expression languase-->
+			<tr th:each="u : ${userList}">
+				<td th:text="${u.getId()}">1</td>
+				<td th:text="${u.name}">Test</td>
+				<td th:text="${u.age}">Test</td>
+				<td th:text="${u.username}"></td>
+				<td>
+					<img th:src="@{'/user/download?file=' + ${u.avatarUrl}}">
+				</td>
+
+				<!--se goi ham GetName()-->
+
+				<td th:text="${u.homeAddress}">Test</td>
+				<td th:text="${u.department.name}">Test</td>
+				<td>
+					<a th:href="@{'/user/delete?id=' + ${u.id}}">Delete</a>
+					<a th:href="@{'/user/edit?id=' + ${u.id}}">Edit</a>
+
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>

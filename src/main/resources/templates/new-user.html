@@ -1,0 +1,61 @@
+<html>
+
+<head>
+	<title>New User</title>
+</head>
+
+<body>
+	<div th:replace="/fragment.html :: menu"></div>
+	<form th:action="@{/user/new}" method="post" enctype="multipart/form-data" th:object="${user}">
+
+		<div>
+			<label th:text="#{user.avatar.file}"></label>
+			<input type="file" name="file" accept="image/*" />
+		</div>
+		<div>
+			<label>ID:</label>
+			<input type="number" name="id" />
+		</div>
+		<div>
+			<label th:text="#{user.name}"></label>
+			<input type="text" th:field="*{name}" />
+			<p th:errors="*{name}" />
+		</div>
+		<div>
+			<label th:text="#{user.age}"></label>
+			<input type="number" th:field="*{age}" />
+			<p th:errors="*{age}" />
+		</div>
+		<div>
+			<label>Username:</label>
+			<input type="text" name="username" />
+		</div>
+		<div>
+			<label>HomeAddress:</label>
+			<input type="text" name="homeAddress" />
+		</div>
+
+		<div>
+			<label>Password:</label>
+			<input type="password" name="password" />
+		</div>
+
+		<div>
+			<label>Department:</label>
+			<select name="department.id">
+				<option th:each="d : ${departmentList}" th:value="${d.id}" th:text="${d.name}" />
+			</select>
+		</div>
+
+		<div>
+			<label>BirthDate:</label>
+			<input type="text" name="birthdate" placeholder="dd/MM/yyyy"/>
+		</div>
+
+		<div>
+			<button type="submit">Save</button>
+		</div>
+	</form>
+</body>
+
+</html>
